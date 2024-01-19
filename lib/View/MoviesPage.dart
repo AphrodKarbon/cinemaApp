@@ -1,4 +1,5 @@
 
+import 'package:cinema/View/MoviesComponent/MoviesDescription.dart';
 import 'package:flutter/material.dart';
 
 class MoviesPage extends StatefulWidget {
@@ -13,12 +14,10 @@ class _MoviesPageState extends State<MoviesPage> {
 
   @override
   Widget build(BuildContext context) {
-    double long = MediaQuery.sizeOf(context).height;
     double larg = MediaQuery.sizeOf(context).width;
     return Container(
-      padding: EdgeInsets.only(top: 100),
-      color: Colors.black87,
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
           children: List.generate(
             6,
             (index) {
@@ -30,8 +29,9 @@ class _MoviesPageState extends State<MoviesPage> {
               );
             }
           ),
-        )
-      );
+        ),
+      )
+    );
   }
 
   Row typeMoviesList() {
@@ -63,18 +63,41 @@ class _MoviesPageState extends State<MoviesPage> {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-
+              Navigator.push(
+                context, 
+                theFadeAnim()
+              );
             },
             child: Container(
               margin: EdgeInsets.only(right: larg * 0.01),
               child: ClipRRect (
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
                 child: Image.asset('./images/images.jpeg'),
               )
             )     
           );
         }
       )
+    );
+  }
+
+  PageRouteBuilder theFadeAnim() {
+    return PageRouteBuilder(
+      opaque: false,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (context,animation,__) {
+        const beginOpacity = 0.0;
+        const endOpacity = 1.0;
+        var opacityTween = Tween<double>(begin: beginOpacity, end: endOpacity);
+        var fadeTransition = opacityTween.animate(animation);
+        return FadeTransition(
+          opacity: fadeTransition,
+          child: MoviesDescription(),
+        );
+      }
     );
   }
 

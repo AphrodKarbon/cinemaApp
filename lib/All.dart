@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import './component/CustomSearchDelegate.dart';
 import 'package:cinema/View/MoviesPage.dart';
 import 'package:cinema/View/HomePage.dart';
 import 'package:cinema/View/AccountPage.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
 
 
@@ -28,20 +28,12 @@ class _AllState extends State<All> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverStack(
-            children: [
-              SliverToBoxAdapter(
-                child: IndexedStack(
-                  index: selectedIndex,
-                  children: pages,
-                ),
-              ),
-              mySearchBar(),
-            ]
-          )
-        ],
+      backgroundColor: Colors.black87,
+      extendBodyBehindAppBar: selectedIndex == 1 ? true : false,
+      appBar: mySearchBar(),
+      body: IndexedStack(
+        index: selectedIndex,
+        children: pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -63,12 +55,8 @@ class _AllState extends State<All> {
     });
   }
 
-  SliverAppBar mySearchBar() {
-    return SliverAppBar(
-      pinned: selectedIndex == 0 ? false : true,
-      floating: true,
-      snap: true,
-      stretch: true,
+  AppBar mySearchBar() {
+    return AppBar(
       backgroundColor: Colors.transparent,
         flexibleSpace: FlexibleSpaceBar(
           background: Container(

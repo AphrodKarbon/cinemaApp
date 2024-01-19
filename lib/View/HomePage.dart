@@ -14,14 +14,14 @@ class _HomePageState extends State<HomePage> {
     double long = MediaQuery.sizeOf(context).height;
     double larg = MediaQuery.sizeOf(context).width;
     return Container(
-      color: Colors.black,
-      child:  Column(
+      child:  SingleChildScrollView(
+        child: Column(
           children: [
             Container(
               height: long * 0.6,
               width: larg * 0.9,
               color: Colors.red,
-              margin: EdgeInsets.only(bottom: 10),
+              margin: const EdgeInsets.only(bottom: 10),
             ),
             Row(
               children: [
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             )
           ]
         ),
-      
+      )
     );
     
   }
